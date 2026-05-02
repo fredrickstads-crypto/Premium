@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mama's Kitchen | Best Meals in Kampala</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    :root {
+      --primary: #e63939;
+      --dark: #1d1d1d;
+      --light: #f8f9fa;
+      --orange: #f97316;
+      --dark-orange: #c2410c;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      line-height: 1.7;
+      color: #333;
+      background: linear-gradient(to bottom, #fff7ed, #fed7aa, #f97316);
+    }
+
+    header {
+      background: rgba(29, 29, 29, 0.95);
+      backdrop-filter: blur(12px);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      transition: all 0.4s ease;
+    }
+
+    header.scrolled {
+      padding: 10px 0;
+      background: rgba(29, 29, 29, 0.98);
+    }
+
+    nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--orange);
+    }
+
+    /* Hamburger */
+    .hamburger {
+      font-size: 28px;
+      color: white;
+      cursor: pointer;
+      display: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--orange);
+    }
+
+    /* HERO */
+    .hero {
+      height: 100vh;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image:url("red.jpg");
+      background-size : cover;
+      opacity:0.5;
+      z-index: 1;
+      will-change: transform;
+    }
+
+    .floating-food {
+      position: absolute;
+      border-radius: 50%;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+      z-index: 2;
+      will-change: transform;
+    }
+
+    #food1 { width: 200px; top: 20%; left: 10%; }
+    #food2 { width: 160px; bottom: 25%; right: 12%; }
+    #food3 { width: 140px; top: 48%; right: 22%; }
+
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      max-width: 850px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 8vw, 4.5rem);
+      font-weight: 700;
+      line-height: 1.05;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 1.4rem;
+      margin-bottom: 40px;
+    }
+
+    .cta-button {
+      background: var(--primary);
+      color: white;
+      padding: 18px 45px;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.25rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 12px 35px rgba(230, 57, 57, 0.4);
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .cta-button:hover {
+      transform: translateY(-5px) scale(1.08);
+    }
+
+    /* Sections */
+    section {
+      padding: 90px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 60px;
+      font-weight: 600;
+      color: var(--dark);
+    }
+
+    /* Popular Meals */
+    .meals-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+    }
+
+    .meal-card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      transition: all 0.4s ease;
+    }
+
+    .meal-card:hover {
+      transform: translateY(-12px);
+      box-shadow: 0 20px 45px rgba(0,0,0,0.15);
+    }
+
+    .meal-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    /* Why Choose Us */
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 30px;
+    }
+
+    .why-card {
+      text-align: center;
+      padding: 30px 20px;
+    }
+
+    /* Testimonials */
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+    }
+
+    .testimonial-card {
+      background: linear-gradient(to right,red,brown);
+      padding: 30px;
+      color: gold;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    /* Gallery Slider */
+    .slider-container {
+      position: relative;
+      max-width: 1100px;
+      margin: 0 auto;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.18);
+    }
+
+    .slides {
+      display: flex;
+      transition: transform 0.85s cubic-bezier(0.32, 0.72, 0, 1);
+    }
+
+    .slide {
+      min-width: 100%;
+      height: 520px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    /* Calculator */
+    .calculator {
+      background: radial-gradient(orange,red);
+      padding: 45px;
+      border-radius: 20px;
+      max-width: 620px;
+      margin: 0 auto;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+    }
+
+    .result {
+      font-size: 1.85rem;
+      font-weight: bold;
+      color: var(--primary);
+      text-align: center;
+      margin: 25px 0;
+    }
+
+    /* WhatsApp Float */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: light-green;
+      color: white;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      box-shadow: 0 10px 30px rgba(200,241,102,0.8);
+      z-index: 2000;
+      transition: all 0.3s ease;
+      animation: float 3s ease-in-out infinite;
+    }
+     @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-12px); }
+    }
+
+    .whatsapp-float:hover {
+      transform: scale(1.15);
+    }
+
+    footer {
+      background: var(--dark);
+      color: white;
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    @media (max-width: 768px) {
+      .hamburger { display: block; }
+      .nav-links { 
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 70px);
+        background: var(--dark);
+        flex-direction: column;
+        align-items: center;
+        justify-content: start;
+        padding-top: 50px;
+        transition: left 0.4s ease;
+      }
+      .nav-links.active { left: 0; }
+      .hero h1 { font-size: 2.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header id="header">
+    <nav>
+      <div class="logo">Mama's Kitchen</div>
+      <div class="nav-links" id="navLinks">
+        <a href="#meals">Menu</a>
+        <a href="#why">Why Us</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#calculator">Quote</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="hamburger" id="hamburger">☰</div>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg" id="hero-bg"></div>
+    <img src="red.jpg" class="floating-food" id="food1" alt="">
+    <img src="c3.jpg" class="floating-food" id="food2" alt="">
+    <img src="chips.jpg" class="floating-food" id="food3" alt="">
+
+    <div class="hero-content">
+      <h1>Fresh. Hot.<br>Delivered Fast.</h1>
+      <p>Authentic Ugandan meals • Takeaway & Delivery in Kampala</p>
+      <button class="cta-button" onclick="document.getElementById('calculator').scrollIntoView({behavior:'smooth'})">
+        Get Quick Quote
+      </button>
+    </div>
+  </section>
+
+  <!-- Popular Meals -->
+  <section id="meals" style="background:radial-gradient(circle ,orange ,brown)">
+    <h2>Popular Meals</h2>
+    <div class="meals-grid">
+      <div class="meal-card">
+        <img src="mat.jpg" alt="">
+        <div class="meal-info" style="background : black;">
+          <h3 style="text-align: center; color : orange;">Matooke + Groundnut Sauce</h3>
+          <p style="color: red; text-align:center;"><strong>UGX 12,000</strong></p>
+        </div>
+      </div>
+      <div class="meal-card">
+        <img src="chips.jpg" alt="">
+        <div class="meal-info"style="background : black;">
+          <h3 style="text-align: center; color : orange;">Grilled Chicken + Chips</h3>
+          <p style="color: red; text-align:center;"><strong>UGX 15,000</strong></p>
+        </div>
+      </div>
+      <div class="meal-card">
+        <img src="pilawu.jpg" alt="">
+        <div class="meal-info" style="background : black;">
+          <h3 style="text-align: center; color : orange;">Beef Pilau</h3>
+          <p style="color: red; text-align:center;"><strong>UGX 13,000</strong></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Us -->
+  <section id="why" style="background-image:url('heros.jpg'); background-size:cover; color : cyan;">
+    <h2 style="color : white;">Why Choose Mama's Kitchen?</h2>
+    <div class="why-grid">
+      <div class="why-card">
+        <h3>🍲 Fresh Ingredients</h3>
+        <p>Daily fresh produce from local markets</p>
+      </div>
+      <div class="why-card">
+        <h3>⚡ Fast Delivery</h3>
+        <p>Within 45 minutes in Kampala</p>
+      </div>
+      <div class="why-card">
+        <h3>💰 Affordable Prices</h3>
+        <p>Great taste without breaking the bank</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery - 5 Image Slider -->
+  <section id="gallery" style="background:linear-gradient(brown,orange);">
+    <h2>Food Gallery</h2>
+    <div class="slider-container">
+      <div class="slides" id="slides">
+        <div class="slide" style="background-image: url('red.jpg')"></div>
+        <div class="slide" style="background-image: url('chips.jpg')"></div>
+        <div class="slide" style="background-image: url('card2.jpg')"></div>
+        <div class="slide" style="background-image: url('hero.jpg')"></div>
+        <div class="slide" style="background-image: url('c3.jpg')"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section style="background:linear-gradient(orange,brown);">
+    <h2>What Our Customers Say</h2>
+    <div class="testimonial-grid">
+      <div class="testimonial-card">
+        <p>"The best matooke I've had! Delivery was super fast."</p>
+        <strong>— Sarah N., Ntinda</strong>
+      </div>
+      <div class="testimonial-card">
+        <p>"Portions are generous and food is always hot. Highly recommended!"</p>
+        <strong>— John M., Makerere</strong>
+      </div>
+      <div class="testimonial-card">
+        <p>"Affordable and tasty. I order from them every week."</p>
+        <strong>— Aisha K., Kisaasi</strong>
+      </div>
+    </div>
+  </section>
+
+  <!-- Calculator -->
+  <section id="calculator" style="background: linear-gradient(brown,orange,gold,yellow,orange,red,brown);">
+    <h2>Quick Order Calculator</h2>
+    <div class="calculator">
+      <label>Choose Meal:</label>
+      <select id="meal">
+        <option value="12000">Matooke + Groundnut Sauce - 12,000</option>
+        <option value="15000">Grilled Chicken + Chips - 15,000</option>
+        <option value="13000">Beef Pilau - 13,000</option>
+        <option value="10000">Posho + Beans - 10,000</option>
+      </select>
+
+      <label>Quantity:</label>
+      <input type="number" id="quantity" value="1" min="1">
+
+      <div class="result" id="result" style="color:red;">Total: UGX 12,000</div>
+      <button class="cta-button" style="width:100%; margin-top:20px;" onclick="orderNow()">
+        Order on WhatsApp
+      </button>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <h2>Ready to Order?</h2>
+    <p style="text-align:center; font-size:1.35rem;">
+      WhatsApp or Call us<br>
+      <strong style="color:var(--primary); font-size:1.9rem;">0758 991 506</strong>
+    </p>
+    <div style="text-align:center; margin-top:30px;">
+      <a href="https://wa.me/256758991506?text=Hello%20Mama's%20Kitchen" class="cta-button">Order via WhatsApp</a>
+    </div>
+  </section>
+
+  <!-- Floating WhatsApp -->
+  <a href="https://wa.me/256758991506" class="whatsapp-float" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <footer>
+    <p>&copy; 2026 Mama's Kitchen • Kampala, Uganda</p>
+    <p>Fresh • Fast • Affordable</p>
+  </footer>
+
+  <script>
+    // Hamburger Menu
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+
+    // Header Scroll Animation
+    window.addEventListener('scroll', () => {
+      document.getElementById('header').classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // Parallax Effect
+    const heroBg = document.getElementById('hero-bg');
+    const food1 = document.getElementById('food1');
+    const food2 = document.getElementById('food2');
+    const food3 = document.getElementById('food3');
+
+    window.addEventListener('scroll', () => {
+      const scroll = window.scrollY;
+      heroBg.style.transform = `translateY(${scroll * 0.45}px)`;
+      food1.style.transform = `translateY(${scroll * 0.22}px)`;
+      food2.style.transform = `translateY(${scroll * 0.58}px)`;
+      food3.style.transform = `translateY(${scroll * 0.35}px)`;
+    });
+
+    // 5-Image Auto Slider
+    let current = 0;
+    const slides = document.getElementById('slides');
+    const total = 5;
+
+    function nextSlide() {
+      current = (current + 1) % total;
+      slides.style.transform = `translateX(-${current * 100}%)`;
+    }
+
+    setInterval(nextSlide, 4500);
+
+    // Calculator
+    function calculateTotal() {
+      const price = parseInt(document.getElementById('meal').value);
+      const qty = parseInt(document.getElementById('quantity').value) || 1;
+      const total = price * qty;
+      document.getElementById('result').textContent = `Total: UGX ${total.toLocaleString()}`;
+    }
+
+    document.getElementById('meal').addEventListener('change', calculateTotal);
+    document.getElementById('quantity').addEventListener('input', calculateTotal);
+    calculateTotal();
+
+    function orderNow() {
+      const total = document.getElementById('result').textContent;
+      const msg = `Hello Mama's Kitchen! I want to order. ${total}`;
+      window.open(`https://wa.me/256758991506?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+  </script>
+</body>
+</html>
